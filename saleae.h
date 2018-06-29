@@ -29,7 +29,7 @@ public slots:
     void CommandResponse();
     void Acquire(bool checked);
     void GetFileName(bool checked);
-    void DisplayAboutMessage(bool checked);
+    void DisplayAboutMessage(void);
 
 private:
     Ui::Saleae *ui;

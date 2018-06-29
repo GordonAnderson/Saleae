@@ -23,6 +23,7 @@
 #include "qtcpsocket.h"
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QIntValidator>
 
 // Constructor
 Saleae::Saleae(QWidget *parent) :
@@ -33,6 +34,8 @@ Saleae::Saleae(QWidget *parent) :
     // Make the dialog fixed size.
     this->setFixedSize(this->size());
 
+    ui->leNumberSamples->setValidator(new QIntValidator);
+    ui->lePreTrigger->setValidator(new QIntValidator);
     // Init the variables
     PostCommandCall = NULL;
     CheckProcessing = false;
@@ -171,7 +174,7 @@ void Saleae::Capture(void)
 }
 
 // This function exports one channel of the data to a file on each call. This function fires itself
-// until all the channels are read and then stops of called Acquire again is the repeat check boc
+// until all the channels are read and then stops of called Acquire again is the repeat check box
 // is selected.
 void Saleae::Export(void)
 {
@@ -184,6 +187,7 @@ void Saleae::Export(void)
     str = "export_data," + fileName + ",analog_channels," + QString::number(CurrentChannel);
  //   str += ", voltage, time_span, 0, " + QString::number(ui->leNumberSamples->text().toFloat() / aRate) + ", binary, each_sample, 32";
     str += ", voltage, all_time, binary, each_sample, 32";
+//    qDebug() << str;
     message = "Exporting channel " + QString::number(CurrentChannel) + ": ";
     statusBar()->showMessage(message);
     CurrentChannel++;
